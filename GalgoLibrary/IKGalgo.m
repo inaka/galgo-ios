@@ -7,13 +7,11 @@
 //
 
 #import "IKGalgo.h"
-#import <UIKit/UIKit.h>
 
 @interface IKGalgo()
 @property (nonatomic, strong) UITextView *loggerTextView;
 @property (nonatomic, strong) UIWindow *loggerWindow;
 @property (nonatomic, strong) NSMutableArray *lines;
-
 @end
 
 @implementation IKGalgo
@@ -30,23 +28,25 @@
 - (id)init {
     if (self = [super init]) {
         CGRect screenSize = [UIScreen mainScreen].bounds;
-        self.loggerWindow = [[UIWindow alloc] initWithFrame:screenSize];
-        self.loggerWindow.windowLevel = UIWindowLevelStatusBar;
-        self.loggerWindow.userInteractionEnabled = NO;
-        self.loggerWindow.backgroundColor = [UIColor clearColor];
-        self.loggerWindow.hidden = NO;
+        _loggerWindow = [[UIWindow alloc] initWithFrame:screenSize];
+        _loggerWindow.windowLevel = UIWindowLevelStatusBar;
+        _loggerWindow.userInteractionEnabled = NO;
+        _loggerWindow.backgroundColor = [UIColor clearColor];
+        _loggerWindow.hidden = NO;
 
         screenSize.size.height = screenSize.size.height - 20;
         screenSize.origin.y = 20;
 
-        self.loggerTextView = [[UITextView alloc] initWithFrame:screenSize];
-        self.loggerTextView.editable = NO;
-        self.loggerTextView.textContainerInset = UIEdgeInsetsZero;
-        self.loggerTextView.alpha = 0.9f;
-        self.loggerTextView.backgroundColor = [UIColor clearColor];
-        self.loggerTextView.backgroundColor = [UIColor redColor];
+        _loggerTextView = [[UITextView alloc] initWithFrame:screenSize];
+        _loggerTextView.editable = NO;
+        _loggerTextView.textContainerInset = UIEdgeInsetsZero;
+        _loggerTextView.backgroundColor = [UIColor clearColor];
 
-        [self.loggerWindow addSubview:self.loggerTextView];
+        [_loggerWindow addSubview:_loggerTextView];
+
+        _backGroundColor = [UIColor lightGrayColor];
+        _fontColor = [UIColor blackColor];
+        _fontSize = 12;
 
         _lines = [[NSMutableArray alloc] init];
     }
@@ -60,8 +60,19 @@
         [self.lines removeObjectAtIndex:0];
     }
 
-    NSString *logs = [self.lines componentsJoinedByString:@"\n"];
-    self.loggerTextView.text = logs;
+    UIColor *backColor = [self.backGroundColor colorWithAlphaComponent:0.40];
+
+    NSMutableAttributedString *mutableAttributedString;
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
+    for (NSString *line in self.lines) {
+        mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@",line]];
+        [mutableAttributedString addAttribute:NSBackgroundColorAttributeName value:backColor range:NSMakeRange(1, line.length)];
+        [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:self.fontColor range:NSMakeRange(1, line.length)];
+        [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:self.fontSize] range:NSMakeRange(1, line.length)];
+        [attributedString appendAttributedString:mutableAttributedString];
+    }
+    
+    self.loggerTextView.attributedText = attributedString;
 }
 
 - (void)setNumberOfLines:(NSInteger)numberOfLines{

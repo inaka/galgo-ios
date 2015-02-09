@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface IKGalgo : NSObject
 
 @property (nonatomic) NSInteger numberOfLines;
+@property (nonatomic, strong) UIColor *backGroundColor;
+@property (nonatomic, strong) UIColor *fontColor;
+@property (nonatomic) NSInteger fontSize;
 
 + (id)sharedLogger;
 - (void)log:(NSString *)logMessage;
