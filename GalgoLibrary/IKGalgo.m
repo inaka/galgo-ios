@@ -10,9 +10,10 @@
 #import <UIKit/UIKit.h>
 
 @interface IKGalgo()
-
 @property (nonatomic, strong) UITextView *loggerTextView;
 @property (nonatomic, strong) UIWindow *loggerWindow;
+@property (nonatomic, strong) NSMutableArray *lines;
+
 @end
 
 @implementation IKGalgo
@@ -34,17 +35,37 @@
         self.loggerWindow.userInteractionEnabled = NO;
         self.loggerWindow.backgroundColor = [UIColor clearColor];
         self.loggerWindow.hidden = NO;
-        
+
         screenSize.size.height = screenSize.size.height - 20;
         screenSize.origin.y = 20;
-        
+
         self.loggerTextView = [[UITextView alloc] initWithFrame:screenSize];
-        self.loggerTextView.text = @"HOLA HOLA";
+        self.loggerTextView.editable = NO;
+        self.loggerTextView.textContainerInset = UIEdgeInsetsZero;
+        self.loggerTextView.alpha = 0.9f;
         self.loggerTextView.backgroundColor = [UIColor clearColor];
+        self.loggerTextView.backgroundColor = [UIColor redColor];
 
         [self.loggerWindow addSubview:self.loggerTextView];
+
+        _lines = [[NSMutableArray alloc] init];
     }
     return self;
+}
+
+- (void)log:(NSString *)logMessage{
+
+    [self.lines addObject:logMessage];
+    if (self.lines.count > self.numberOfLines) {
+        [self.lines removeObjectAtIndex:0];
+    }
+
+    NSString *logs = [self.lines componentsJoinedByString:@"\n"];
+    self.loggerTextView.text = logs;
+}
+
+- (void)setNumberOfLines:(NSInteger)numberOfLines{
+    _numberOfLines = numberOfLines;
 }
 
 @end

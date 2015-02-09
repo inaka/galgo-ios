@@ -9,5 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface IKGalgo : NSObject
+
+@property (nonatomic) NSInteger numberOfLines;
+
 + (id)sharedLogger;
+- (void)log:(NSString *)logMessage;
 @end

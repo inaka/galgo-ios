@@ -20,6 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     IKGalgo *galgo = [IKGalgo sharedLogger];
+    [galgo setNumberOfLines:10];
 }
 
 - (void) viewDidLayoutSubviews{
@@ -29,4 +30,7 @@
     self.label.text = [@[@"SARASA", @"tururu",@"Coliflor"] objectAtIndex:arc4random_uniform (2)];
 }
 
+- (IBAction)addLog:(id)sender {
+    [[IKGalgo sharedLogger] log:[NSString stringWithFormat:@"this is a test log %d",arc4random_uniform (100)]];
+}
 @end
