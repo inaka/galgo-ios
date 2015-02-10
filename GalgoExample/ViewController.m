@@ -34,7 +34,25 @@
     [galgo log:@"Showing First View Controller"];
 }
 
-- (void) viewDidLayoutSubviews{
+- (IBAction)showAlertView{
+    UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"Test"
+                                                                       message:@"Yep This Works"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * action){
+            [alertView dismissViewControllerAnimated:YES completion:nil];
+            [[IKGalgo sharedLogger] log:@"Dismiss Alert Controller"];
+    }];
+    
+    [alertView addAction:ok];
+    [self presentViewController:alertView animated:YES completion:nil];
+    
+    [[IKGalgo sharedLogger] log:@"Show Alert Controller"];
+
+}
+
+- (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
 }
 
