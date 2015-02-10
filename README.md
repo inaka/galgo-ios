@@ -5,7 +5,7 @@ Inspired on [Galgo for Android](https://github.com/inaka/galgo)
 A tiny iOS library for those moments when you want your logs to be displayed on screen. 
 
 ### Abstract
-<img src="http://i59.tinypic.com/eagm6h.png" align="right" style="float:right" height="200" />
+<img src="http://i60.tinypic.com/zxmf03.png" align="right" style="float:right" height="300" />
 Sometimes we want/need to know what's going on behind the scenes but our app is not always connected to our computer to let us check the logs. Galgo will let you display your log messages as an overlay on top of your UI.
 
 Extremely useful for testers who want to have more insight into what's going on behind the scenes in our apps when it misbehaves.
